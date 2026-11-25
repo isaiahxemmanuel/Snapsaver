@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6f4ec">
+<title>Privacy – Snapsaver</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ec;--ink:#181611;--mute:#6b665a;--line:#e4dfd0;--accent:#f0a500;--on-accent:#181611;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#14130f;--ink:#f4f1e8;--mute:#a8a291;--line:#36332a;--accent:#f5b21a;color-scheme:dark}
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px 40px}
+header{display:flex;align-items:center;gap:10px;padding:22px 0 8px}
+header a{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}
+.mark{width:34px;height:34px;border-radius:11px 11px 11px 4px;background:var(--accent);position:relative;flex:none}
+.mark::before{content:"";position:absolute;left:50%;top:8px;width:3px;height:12px;background:var(--on-accent);transform:translateX(-50%);border-radius:2px}
+.mark::after{content:"";position:absolute;left:50%;top:17px;width:9px;height:9px;border-right:3px solid var(--on-accent);border-bottom:3px solid var(--on-accent);transform:translateX(-50%) rotate(45deg) scale(.8);transform-origin:center}
+.brand,h1,h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.02em}
+.brand{font-weight:800;font-size:22px}
+h1{font-weight:800;font-size:clamp(34px,8vw,52px);line-height:1.05;margin:30px 0 6px}
+h2{font-weight:800;font-size:22px;line-height:1.2;margin:32px 0 8px}
+p{margin:0 0 12px;max-width:38em}
+.date{color:var(--mute);margin-bottom:8px}
+a{color:var(--ink);text-underline-offset:3px}
+.back{display:inline-block;margin-top:36px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header><a href="/"><span class="mark" aria-hidden="true"></span><span class="brand">Snapsaver</span></a></header>
+
+  <main>
+    <h1>Privacy</h1>
+    <p class="date">Last updated: November 25, 2026</p>
+
+    <h2>Your links and videos</h2>
+    <p>When you paste a link, our server uses it only to find the public video and send it to you. We don’t save the video, and our code doesn’t keep a record of the links you paste. Each download passes straight from Snapchat’s servers to your device.</p>
+
+    <h2>Visit counts (Google Analytics)</h2>
+    <p>We use Google Analytics to count visits and understand how the site is used. It records things like which pages are viewed, your approximate country (worked out from your IP address), your device and browser type, and how long a visit lasts. Google Analytics uses cookies and similar technologies to do this.</p>
+    <p>To learn how Google uses data from sites like this one, see <a href="https://policies.google.com/technologies/partner-sites">Google’s explanation</a>. You can opt out with the <a href="https://tools.google.com/dlpage/gaoptout">Google Analytics opt-out browser add-on</a>.</p>
+
+    <h2>Technical logs</h2>
+    <p>Our hosting provider may keep standard server logs, such as IP addresses and request times, to run and secure the service.</p>
+
+    <h2>Other services</h2>
+    <p>This site loads its fonts from Google Fonts, so your browser contacts Google to fetch them.</p>
+
+    <h2>Your Snapchat account</h2>
+    <p>We never ask for your Snapchat username or password. You only paste a link. If a site claiming to be Snapsaver asks for your login, it isn’t us.</p>
+
+    <h2>Not affiliated with Snap Inc.</h2>
+    <p>Snapsaver isn’t affiliated with or endorsed by Snap Inc. Videos belong to their creators. Save them for personal use and don’t repost without permission.</p>
+
+    <h2>Contact</h2>
+    <p>Contact details are coming soon.</p>
+
+    <a class="back" href="/">← Back to Snapsaver</a>
+  </main>
+</div>
+</body>
+</html>
