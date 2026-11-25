@@ -3,27 +3,31 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>SnapKeep – Save Snapchat videos and stories</title>
+<meta name="theme-color" content="#f6f4ec">
+<title>Snapsaver – Save Snapchat videos and stories</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#eef1ff;--card:#fff;--ink:#101437;--mute:#586089;--line:#d5dbf7;
-  --accent:#5b3df5;--on-accent:#fff;--soft:#dde3ff;--err:#c62828;--pink:#ff8fb1;
+  --bg:#f6f4ec;--card:#fff;--ink:#181611;--mute:#6b665a;--line:#e4dfd0;
+  --accent:#f0a500;--on-accent:#181611;--soft:#fbe7b0;--err:#c62828;
+  --keep-bg:#181611;--keep-ink:#f6f4ec;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#0f1020;--card:#1a1b33;--ink:#eceeff;--mute:#a0a6d0;--line:#2c2e52;
-    --accent:#8c7bff;--on-accent:#0f1020;--soft:#24264a;--err:#ff8a8a;color-scheme:dark;
+    --bg:#14130f;--card:#211f19;--ink:#f4f1e8;--mute:#a8a291;--line:#36332a;
+    --accent:#f5b21a;--on-accent:#181611;--soft:#3a331d;--err:#ff8a8a;
+    --keep-bg:#2b2820;--keep-ink:#f4f1e8;color-scheme:dark;
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0f1020;--card:#1a1b33;--ink:#eceeff;--mute:#a0a6d0;--line:#2c2e52;
-  --accent:#8c7bff;--on-accent:#0f1020;--soft:#24264a;--err:#ff8a8a;color-scheme:dark;
+  --bg:#14130f;--card:#211f19;--ink:#f4f1e8;--mute:#a8a291;--line:#36332a;
+  --accent:#f5b21a;--on-accent:#181611;--soft:#3a331d;--err:#ff8a8a;
+  --keep-bg:#2b2820;--keep-ink:#f4f1e8;color-scheme:dark;
 }
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
@@ -43,7 +47,7 @@ h1{font-weight:800;font-size:clamp(38px,9.5vw,64px);margin-top:34px;max-width:11
 .slot input::placeholder{color:var(--mute)}
 .row{display:flex;gap:10px}
 button{font:inherit;font-weight:700;border:0;border-radius:14px;padding:14px 18px;cursor:pointer;min-height:48px}
-button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 .go{background:var(--accent);color:var(--on-accent);flex:2}
 .go:disabled{opacity:.6;cursor:progress}
 .ghost{background:var(--soft);color:var(--ink);flex:1}
@@ -65,13 +69,13 @@ h2{font-weight:800;font-size:clamp(26px,6vw,34px);margin-bottom:18px}
 .steps b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-family:"Bricolage Grotesque",system-ui,sans-serif}
 .steps strong{display:block}
 .steps span{color:var(--mute);font-size:16px}
-.keep{background:var(--accent);color:var(--on-accent);border-radius:26px 26px 26px 6px;padding:26px 24px}
+.keep{background:var(--keep-bg);color:var(--keep-ink);border-radius:26px 26px 26px 6px;padding:26px 24px}
 .keep h2{margin-bottom:10px}
 .keep p{margin:0;max-width:32em;opacity:.95}
 details{border-bottom:1px solid var(--line);padding:14px 0}
 summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
 summary::-webkit-details-marker{display:none}
-summary::after{content:"+";font-size:22px;line-height:1;color:var(--accent)}
+summary::after{content:"+";font-size:22px;line-height:1;color:var(--ink)}
 details[open] summary::after{content:"–"}
 details p{margin:10px 0 0;color:var(--mute)}
 footer{margin-top:56px;padding:22px 0 36px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
@@ -83,7 +87,7 @@ footer p{margin:0 0 8px;max-width:38em}
 <div class="wrap">
   <header>
     <span class="mark" aria-hidden="true"></span>
-    <span class="brand">SnapKeep</span>
+    <span class="brand">Snapsaver</span>
   </header>
 
   <main>
@@ -124,7 +128,7 @@ footer p{margin:0 0 8px;max-width:38em}
       <h2>Questions</h2>
       <details>
         <summary>Why can’t I save a private story?</summary>
-        <p>Private snaps and friends-only stories can’t be reached from a link. SnapKeep only works with public content.</p>
+        <p>Private snaps and friends-only stories can’t be reached from a link. Snapsaver only works with public content.</p>
       </details>
       <details>
         <summary>Do you store my videos?</summary>
@@ -142,7 +146,7 @@ footer p{margin:0 0 8px;max-width:38em}
   </main>
 
   <footer>
-    <p>SnapKeep is not affiliated with Snap Inc. Videos belong to their creators. Save them for personal use and don’t repost without permission.</p>
+    <p>Snapsaver is not affiliated with Snap Inc. Videos belong to their creators. Save them for personal use and don’t repost without permission.</p>
     <p>Takedown requests: contact details coming soon.</p>
   </footer>
 </div>

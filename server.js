@@ -1,5 +1,5 @@
 'use strict';
-/* SnapKeep backend. Zero dependencies, Node 18+.
+/* Snapsaver backend. Zero dependencies, Node 18+.
    Nothing is saved: media streams from Snapchat's CDN straight to the user. */
 const http = require('http');
 const fs = require('fs');
@@ -148,7 +148,7 @@ function readBody(req, max) {
     req.on('error', no);
   });
 }
-const safeName = n => String(n || 'snapkeep').replace(/[^a-z0-9._-]/gi, '-').slice(0, 80);
+const safeName = n => String(n || 'snapsaver').replace(/[^a-z0-9._-]/gi, '-').slice(0, 80);
 
 /* ---------- routes ---------- */
 async function resolve(req, res) {
@@ -174,7 +174,7 @@ async function resolve(req, res) {
     ok: true,
     kind: kindOf(finalUrl),
     items: items.slice(0, 30).map((it, i) => {
-      const name = 'snapkeep-' + (i + 1) + (it.type === 'video' ? '.mp4' : '.jpg');
+      const name = 'snapsaver-' + (i + 1) + (it.type === 'video' ? '.mp4' : '.jpg');
       const q = '/api/download?u=' + encodeURIComponent(it.url) + '&name=' + name;
       return { type: it.type, name, src: q + '&inline=1', href: q };
     })
@@ -220,4 +220,4 @@ const server = http.createServer(async (req, res) => {
 });
 
 module.exports = { extractMedia, hostOk, safeUrl, server };
-if (require.main === module) server.listen(PORT, () => console.log('SnapKeep listening on ' + PORT));
+if (require.main === module) server.listen(PORT, () => console.log('Snapsaver listening on ' + PORT));
