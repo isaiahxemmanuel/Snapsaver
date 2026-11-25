@@ -1,0 +1,9 @@
+{
+  "name": "snapkeep",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Paste a public Snapchat link, download the video. Nothing is stored.",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" }
+}

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SnapKeep – Save Snapchat videos and stories</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef1ff;--card:#fff;--ink:#101437;--mute:#586089;--line:#d5dbf7;
+  --accent:#5b3df5;--on-accent:#fff;--soft:#dde3ff;--err:#c62828;--pink:#ff8fb1;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1020;--card:#1a1b33;--ink:#eceeff;--mute:#a0a6d0;--line:#2c2e52;
+    --accent:#8c7bff;--on-accent:#0f1020;--soft:#24264a;--err:#ff8a8a;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1020;--card:#1a1b33;--ink:#eceeff;--mute:#a0a6d0;--line:#2c2e52;
+  --accent:#8c7bff;--on-accent:#0f1020;--soft:#24264a;--err:#ff8a8a;color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:680px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;gap:10px;padding:22px 0 8px}
+.mark{width:34px;height:34px;border-radius:11px 11px 11px 4px;background:var(--accent);position:relative;flex:none}
+.mark::before{content:"";position:absolute;left:50%;top:8px;width:3px;height:12px;background:var(--on-accent);transform:translateX(-50%);border-radius:2px}
+.mark::after{content:"";position:absolute;left:50%;top:17px;width:9px;height:9px;border-right:3px solid var(--on-accent);border-bottom:3px solid var(--on-accent);transform:translateX(-50%) rotate(45deg) scale(.8);transform-origin:center}
+.brand{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em}
+h1,h2{font-family:"Bricolage Grotesque",system-ui,sans-serif;letter-spacing:-.025em;line-height:1.05;margin:0}
+h1{font-weight:800;font-size:clamp(38px,9.5vw,64px);margin-top:34px;max-width:11em}
+.lead{color:var(--mute);margin:16px 0 28px;max-width:30em}
+.slot{background:var(--card);border:2px dashed var(--accent);border-radius:24px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.slot:focus-within{border-style:solid}
+.slot input{width:100%;min-width:0;border:0;background:transparent;color:var(--ink);font:inherit;font-size:18px;padding:14px 10px;outline:0}
+.slot input::placeholder{color:var(--mute)}
+.row{display:flex;gap:10px}
+button{font:inherit;font-weight:700;border:0;border-radius:14px;padding:14px 18px;cursor:pointer;min-height:48px}
+button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.go{background:var(--accent);color:var(--on-accent);flex:2}
+.go:disabled{opacity:.6;cursor:progress}
+.ghost{background:var(--soft);color:var(--ink);flex:1}
+.msg{min-height:1.6em;margin:12px 4px 0;font-weight:600;color:var(--mute)}
+.msg.err{color:var(--err)}
+.result{display:none;margin-top:18px}
+.result.show{display:block}
+.kind{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:26px;letter-spacing:-.02em;margin:0 0 12px}
+.items{display:grid;gap:14px}
+.item{background:var(--card);border-radius:22px;padding:14px;display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center}
+.pv{display:block;aspect-ratio:9/16;width:100%;border-radius:14px;background:var(--soft);object-fit:cover}
+.item p{margin:0 0 10px;font-weight:700}
+.item .go{display:block;text-align:center;text-decoration:none;padding:14px 18px;border-radius:14px;font-weight:700;background:var(--accent);color:var(--on-accent)}
+.again{margin-top:14px;width:100%}
+section{margin-top:56px}
+h2{font-weight:800;font-size:clamp(26px,6vw,34px);margin-bottom:18px}
+.steps{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.steps li{background:var(--card);border-radius:18px;padding:16px 18px;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+.steps b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-family:"Bricolage Grotesque",system-ui,sans-serif}
+.steps strong{display:block}
+.steps span{color:var(--mute);font-size:16px}
+.keep{background:var(--accent);color:var(--on-accent);border-radius:26px 26px 26px 6px;padding:26px 24px}
+.keep h2{margin-bottom:10px}
+.keep p{margin:0;max-width:32em;opacity:.95}
+details{border-bottom:1px solid var(--line);padding:14px 0}
+summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:22px;line-height:1;color:var(--accent)}
+details[open] summary::after{content:"–"}
+details p{margin:10px 0 0;color:var(--mute)}
+footer{margin-top:56px;padding:22px 0 36px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
+footer p{margin:0 0 8px;max-width:38em}
+@media (max-width:420px){.item{grid-template-columns:96px 1fr}.row{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="mark" aria-hidden="true"></span>
+    <span class="brand">SnapKeep</span>
+  </header>
+
+  <main>
+    <h1>Save Snapchat videos and stories from a link.</h1>
+    <p class="lead">Paste the link, tap Get video, then download. Works with public Spotlight videos and public stories.</p>
+
+    <form id="f" class="slot" novalidate>
+      <label for="url" style="position:absolute;left:-9999px">Snapchat link</label>
+      <input id="url" type="url" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Paste your Snapchat link">
+      <div class="row">
+        <button type="button" class="ghost" id="paste">Paste</button>
+        <button type="submit" class="go" id="go">Get video</button>
+      </div>
+    </form>
+    <p class="msg" id="msg" role="status" aria-live="polite"></p>
+
+    <div class="result" id="res">
+      <p class="kind" id="kind"></p>
+      <div class="items" id="items"></div>
+      <button type="button" class="ghost again" id="reset">Start over</button>
+    </div>
+
+    <section>
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><b>1</b><div><strong>Copy the link</strong><span>In Snapchat, open the video or story, tap Share, then Copy Link.</span></div></li>
+        <li><b>2</b><div><strong>Paste it above</strong><span>Tap Paste, then Get video.</span></div></li>
+        <li><b>3</b><div><strong>Download</strong><span>Check the preview and tap Download video.</span></div></li>
+      </ol>
+    </section>
+
+    <section class="keep">
+      <h2>We don’t keep anything.</h2>
+      <p>Your video is never saved on our servers. To get it again, paste the link again.</p>
+    </section>
+
+    <section>
+      <h2>Questions</h2>
+      <details>
+        <summary>Why can’t I save a private story?</summary>
+        <p>Private snaps and friends-only stories can’t be reached from a link. SnapKeep only works with public content.</p>
+      </details>
+      <details>
+        <summary>Do you store my videos?</summary>
+        <p>No. Nothing you download is saved on our servers.</p>
+      </details>
+      <details>
+        <summary>Can I save the same video again later?</summary>
+        <p>Yes. Paste the same Snapchat link again and tap Get video.</p>
+      </details>
+      <details>
+        <summary>The link doesn’t work. What now?</summary>
+        <p>Make sure the video or story is public, then copy the link again from the Share menu. Links must come from snapchat.com.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <p>SnapKeep is not affiliated with Snap Inc. Videos belong to their creators. Save them for personal use and don’t repost without permission.</p>
+    <p>Takedown requests: contact details coming soon.</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var $=function(s){return document.querySelector(s)};
+  var form=$('#f'),inp=$('#url'),msg=$('#msg'),res=$('#res'),go=$('#go'),box=$('#items');
+  var calm=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ERR={
+    not_snapchat:'That isn’t a Snapchat link. Copy it from the Share menu in Snapchat and paste it again.',
+    no_media:'We couldn’t find a video at that link. Make sure it’s public, then copy the link again.',
+    fetch_failed:'Snapchat didn’t respond. Try again in a moment.',
+    rate_limited:'Too many requests. Wait a minute and try again.',
+    bad_request:'Something was wrong with that link. Copy it again and retry.'
+  };
+  function say(t,err){msg.textContent=t;msg.className='msg'+(err?' err':'')}
+  function busy(on){go.disabled=on;go.textContent=on?'Getting…':'Get video'}
+  function card(it,i,total){
+    var d=document.createElement('div');d.className='item';
+    var pv=document.createElement(it.type==='video'?'video':'img');
+    pv.className='pv';pv.src=it.src;
+    if(it.type==='video'){pv.controls=true;pv.muted=true;pv.playsInline=true;pv.preload='metadata'}
+    else{pv.alt='Snapchat image'}
+    var r=document.createElement('div'),p=document.createElement('p'),a=document.createElement('a');
+    p.textContent=(it.type==='video'?'Video':'Image')+(total>1?' '+(i+1)+' of '+total:'');
+    a.className='go';a.href=it.href;a.setAttribute('download',it.name);
+    a.textContent=it.type==='video'?'Download video':'Download image';
+    r.appendChild(p);r.appendChild(a);d.appendChild(pv);d.appendChild(r);
+    return d;
+  }
+  form.addEventListener('submit',async function(e){
+    e.preventDefault();
+    res.classList.remove('show');
+    var v=inp.value.trim();
+    if(!v){say('Paste a Snapchat link first.',true);return}
+    say('Getting your video…');busy(true);
+    try{
+      var r=await fetch('/api/resolve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:v})});
+      var j=await r.json().catch(function(){return{ok:false,error:'fetch_failed'}});
+      if(!j.ok){say(ERR[j.error]||ERR.fetch_failed,true);return}
+      $('#kind').textContent=j.kind;
+      box.textContent='';
+      j.items.forEach(function(it,i){box.appendChild(card(it,i,j.items.length))});
+      say('');
+      res.classList.add('show');
+      res.scrollIntoView({behavior:calm?'auto':'smooth',block:'nearest'});
+    }catch(err){say('Couldn’t reach the server. Check your connection and try again.',true)}
+    finally{busy(false)}
+  });
+  $('#paste').addEventListener('click',function(){
+    var fail=function(){inp.focus();say('Couldn’t read your clipboard. Long-press the box and tap Paste.',true)};
+    try{navigator.clipboard.readText().then(function(t){inp.value=t;inp.focus();say('')},fail)}catch(e){fail()}
+  });
+  $('#reset').addEventListener('click',function(){
+    inp.value='';res.classList.remove('show');box.textContent='';say('');inp.focus();
+  });
+})();
+</script>
+</body>
+</html>
