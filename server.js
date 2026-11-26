@@ -14,7 +14,10 @@ const MEDIA_HOSTS = ['sc-cdn.net', 'snapchat.com']
 
 // Works with the page in public/index.html or sitting next to server.js (easier to upload from a phone)
 const INDEX = [path.join(__dirname, 'public', 'index.html'), path.join(__dirname, 'index.html')].find(f => fs.existsSync(f));
-const PRIVACY = [path.join(__dirname, 'public', 'privacy.html'), path.join(__dirname, 'privacy.html')].find(f => fs.existsSync(f));
+const PAGES = {};
+['privacy', 'terms', 'about', 'contact'].forEach(n => {
+  PAGES['/' + n] = [path.join(__dirname, 'public', n + '.html'), path.join(__dirname, n + '.html')].find(f => fs.existsSync(f));
+});
 
 const hostOk = (h, list) => { h = String(h).toLowerCase(); return list.some(d => h === d || h.endsWith('.' + d)); };
 const safeUrl = (s, list) => {
@@ -211,9 +214,9 @@ const server = http.createServer(async (req, res) => {
       if (!INDEX) return send(res, 500, { ok: false, error: 'server_error' });
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       fs.createReadStream(INDEX).pipe(res);
-    } else if (req.method === 'GET' && (p === '/privacy' || p === '/privacy/') && PRIVACY) {
+    } else if (req.method === 'GET' && PAGES[p.replace(/\/$/, '')]) {
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-      fs.createReadStream(PRIVACY).pipe(res);
+      fs.createReadStream(PAGES[p.replace(/\/$/, '')]).pipe(res);
     } else if (p === '/healthz') send(res, 200, { ok: true });
     else if (p === '/api/resolve' && req.method === 'POST') await resolve(req, res);
     else if (p === '/api/download' && req.method === 'GET') await download(req, res);

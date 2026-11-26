@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#f6f4ec">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMFG3HNZTR"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments)}
+gtag('js',new Date());
+gtag('config','G-FMFG3HNZTR');
+</script>
 <title>Privacy – Snapsaver</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,17 +39,23 @@ h1{font-weight:800;font-size:clamp(34px,8vw,52px);line-height:1.05;margin:30px 0
 h2{font-weight:800;font-size:22px;line-height:1.2;margin:32px 0 8px}
 p{margin:0 0 12px;max-width:38em}
 .date{color:var(--mute);margin-bottom:8px}
-a{color:var(--ink);text-underline-offset:3px}
-.back{display:inline-block;margin-top:36px;font-weight:700}
+main a{color:var(--ink);text-underline-offset:3px}
+.btn{display:inline-block;margin-top:8px;padding:14px 20px;border-radius:14px;background:var(--accent);color:var(--on-accent);font-weight:800;text-decoration:none}
+footer{margin-top:56px;padding:22px 0 0;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
+footer p{margin:0 0 8px;max-width:38em}
+footer a.inl{display:inline;padding:0;color:var(--ink);text-decoration:underline;text-underline-offset:3px;font-size:inherit}
+.fcols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:22px}
+.fcols h3{margin:0 0 6px;font:800 17px "Bricolage Grotesque",system-ui,sans-serif;color:var(--ink)}
+.fcols a{display:block;padding:8px 0;color:var(--mute);text-decoration:none;font-size:16px}
+.copy{margin-top:18px!important}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header><a href="/"><span class="mark" aria-hidden="true"></span><span class="brand">Snapsaver</span></a></header>
-
   <main>
     <h1>Privacy</h1>
-    <p class="date">Last updated: November 25, 2026</p>
+    <p class="date">Last updated: November 26, 2026</p>
 
     <h2>Your links and videos</h2>
     <p>When you paste a link, our server uses it only to find the public video and send it to you. We don’t save the video, and our code doesn’t keep a record of the links you paste. Each download passes straight from Snapchat’s servers to your device.</p>
@@ -64,10 +77,17 @@ a{color:var(--ink);text-underline-offset:3px}
     <p>Snapsaver isn’t affiliated with or endorsed by Snap Inc. Videos belong to their creators. Save them for personal use and don’t repost without permission.</p>
 
     <h2>Contact</h2>
-    <p>Contact details are coming soon.</p>
-
-    <a class="back" href="/">← Back to Snapsaver</a>
+    <p>Questions about privacy? Email <a href="mailto:Contact.infosnapsaver@gmail.com">Contact.infosnapsaver@gmail.com</a>.</p>
   </main>
+  <footer>
+    <div class="fcols">
+      <div><h3>Legal</h3><a href="/privacy">Privacy Policy</a><a href="/terms">Terms of Service</a></div>
+      <div><h3>Quick Links</h3><a href="/about">About us</a><a href="/contact">Contact us</a></div>
+    </div>
+    <p>Snapsaver is not affiliated with Snap Inc. Videos belong to their creators. Save them for personal use and don’t repost without permission.</p>
+    <p>Takedown requests: <a class="inl" href="mailto:Contact.infosnapsaver@gmail.com">Contact.infosnapsaver@gmail.com</a></p>
+    <p class="copy">© 2026 Snapsaver. All rights reserved.</p>
+  </footer>
 </div>
 </body>
 </html>
