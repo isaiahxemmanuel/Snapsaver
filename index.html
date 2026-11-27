@@ -1,15 +1,19 @@
 <!doctype html>
 <html lang="en">
 <head>
-<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K936LW77"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#f6f4ec">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
+<link rel="canonical" href="%SITE%/">
+<meta name="description" content="Paste a public Snapchat link to save Spotlight videos and stories to your phone. No app, no login, nothing stored.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Snapsaver">
+<meta property="og:title" content="Snapsaver – Save Snapchat Videos and Stories from a Link">
+<meta property="og:description" content="Paste a public Snapchat link to save Spotlight videos and stories to your phone. No app, no login, nothing stored.">
+<meta property="og:url" content="%SITE%/">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Snapsaver","url":"%SITE%/","description":"Save public Snapchat videos and stories from a link.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","browserRequirements":"Requires a modern web browser","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FMFG3HNZTR"></script>
 <script>
 window.dataLayer=window.dataLayer||[];
@@ -17,30 +21,18 @@ function gtag(){dataLayer.push(arguments)}
 gtag('js',new Date());
 gtag('config','G-FMFG3HNZTR');
 </script>
-<title>Snapsaver – Save Snapchat videos and stories</title>
+<title>Snapsaver – Save Snapchat Videos and Stories from a Link</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f6f4ec;--card:#fff;--ink:#181611;--mute:#6b665a;--line:#e4dfd0;
+  --bg:#ffffff;--card:#f6f4ec;--ink:#181611;--mute:#6b665a;--line:#e4dfd0;
   --accent:#f0a500;--on-accent:#181611;--soft:#fbe7b0;--err:#c62828;
-  --keep-bg:#181611;--keep-ink:#f6f4ec;
+  --keep-bg:#181611;--keep-ink:#f6f4ec;color-scheme:light;
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
   padding-bottom:env(safe-area-inset-bottom,0px);
-}
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#14130f;--card:#211f19;--ink:#f4f1e8;--mute:#a8a291;--line:#36332a;
-    --accent:#f5b21a;--on-accent:#181611;--soft:#3a331d;--err:#ff8a8a;
-    --keep-bg:#2b2820;--keep-ink:#f4f1e8;color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#14130f;--card:#211f19;--ink:#f4f1e8;--mute:#a8a291;--line:#36332a;
-  --accent:#f5b21a;--on-accent:#181611;--soft:#3a331d;--err:#ff8a8a;
-  --keep-bg:#2b2820;--keep-ink:#f4f1e8;color-scheme:dark;
 }
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
@@ -70,7 +62,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--ink);outline-
 .result.show{display:block}
 .kind{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:800;font-size:26px;letter-spacing:-.02em;margin:0 0 12px}
 .items{display:grid;gap:14px}
-.item{background:var(--card);border-radius:22px;padding:14px;display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center}
+.item{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:14px;display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center}
 .pv{display:block;aspect-ratio:9/16;width:100%;border-radius:14px;background:var(--soft);object-fit:cover}
 .item p{margin:0 0 10px;font-weight:700}
 .item .go{display:block;text-align:center;text-decoration:none;padding:14px 18px;border-radius:14px;font-weight:700;background:var(--accent);color:var(--on-accent)}
@@ -78,7 +70,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid var(--ink);outline-
 section{margin-top:56px}
 h2{font-weight:800;font-size:clamp(26px,6vw,34px);margin-bottom:18px}
 .steps{display:grid;gap:12px;margin:0;padding:0;list-style:none}
-.steps li{background:var(--card);border-radius:18px;padding:16px 18px;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
+.steps li{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start}
 .steps b{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-family:"Bricolage Grotesque",system-ui,sans-serif}
 .steps strong{display:block}
 .steps span{color:var(--mute);font-size:16px}
@@ -98,6 +90,7 @@ footer a.inl{display:inline;padding:0;color:var(--ink);text-decoration:underline
 .fcols a{display:block;padding:8px 0;color:var(--mute);text-decoration:none;font-size:16px}
 .copy{margin-top:18px!important}
 footer p{margin:0 0 8px;max-width:38em}
+.can ul{margin:0 0 12px;padding-left:1.2em}.can li{margin:6px 0}.can p{margin:0 0 12px;color:var(--mute);max-width:34em}
 @media (max-width:420px){.item{grid-template-columns:96px 1fr}.row{flex-direction:column}}
 </style>
 </head>
@@ -129,12 +122,23 @@ footer p{margin:0 0 8px;max-width:38em}
     </div>
 
     <section>
-      <h2>How it works</h2>
+      <h2>How to save a Snapchat video or story</h2>
       <ol class="steps">
         <li><b>1</b><div><strong>Copy the link</strong><span>In Snapchat, open the video or story, tap Share, then Copy Link.</span></div></li>
         <li><b>2</b><div><strong>Paste it above</strong><span>Tap Paste, then Get video.</span></div></li>
         <li><b>3</b><div><strong>Download</strong><span>Check the preview and tap Download video.</span></div></li>
       </ol>
+    </section>
+
+    <section class="can">
+      <h2>What you can save</h2>
+      <p>Snapsaver works with public Snapchat content that opens from a link:</p>
+      <ul>
+        <li><strong>Spotlight videos.</strong> Tap Share, then Copy Link.</li>
+        <li><strong>Public stories.</strong> Stories from public profiles.</li>
+        <li><strong>Shared video links.</strong> Links to snapchat.com that someone sent you.</li>
+      </ul>
+      <p>Private snaps and friends-only stories can’t be saved. They stay private.</p>
     </section>
 
     <section class="keep">
@@ -159,6 +163,14 @@ footer p{margin:0 0 8px;max-width:38em}
       <details>
         <summary>The link doesn’t work. What now?</summary>
         <p>Make sure the video or story is public, then copy the link again from the Share menu. Links must come from snapchat.com.</p>
+      </details>
+      <details>
+        <summary>Does it work on iPhone and Android?</summary>
+        <p>Yes. Snapsaver runs in your phone’s browser, so there’s nothing to install.</p>
+      </details>
+      <details>
+        <summary>Do I need to log in to Snapchat?</summary>
+        <p>No. You only paste a link. We never ask for your Snapchat username or password.</p>
       </details>
     </section>
   </main>

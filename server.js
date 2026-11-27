@@ -5,6 +5,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { Readable, pipeline } = require('stream');
+const zlib = require('zlib');
 
 const PORT = process.env.PORT || 3000;
 const UA = 'Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Mobile Safari/537.36';
@@ -152,6 +153,23 @@ function readBody(req, max) {
     req.on('error', no);
   });
 }
+// Public address of the site. Set SITE_URL (e.g. https://yourdomain.com) once you have a domain.
+const SITE_ENV = (process.env.SITE_URL || '').replace(/\/+$/, '');
+const siteOf = req => {
+  if (SITE_ENV) return SITE_ENV;
+  const h = String(req.headers['x-forwarded-host'] || req.headers.host || '');
+  return 'https://' + (/^[a-z0-9.-]+(:\d+)?$/i.test(h) ? h : 'localhost');
+};
+function serveHtml(req, res, file) {
+  fs.readFile(file, 'utf8', (err, html) => {
+    if (err) return send(res, 500, { ok: false, error: 'server_error' });
+    const body = Buffer.from(html.replace(/%SITE%/g, siteOf(req)), 'utf8');
+    const h = { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'public, max-age=300', 'Vary': 'Accept-Encoding' };
+    if (/\bgzip\b/.test(req.headers['accept-encoding'] || '')) {
+      h['Content-Encoding'] = 'gzip'; res.writeHead(200, h); res.end(zlib.gzipSync(body));
+    } else { res.writeHead(200, h); res.end(body); }
+  });
+}
 const safeName = n => String(n || 'snapsaver').replace(/[^a-z0-9._-]/gi, '-').slice(0, 80);
 
 /* ---------- routes ---------- */
@@ -210,13 +228,18 @@ const server = http.createServer(async (req, res) => {
   res.setHeader('Referrer-Policy', 'no-referrer');
   const p = new URL(req.url, 'http://x').pathname;
   try {
-    if (req.method === 'GET' && (p === '/' || p === '/index.html')) {
-      if (!INDEX) return send(res, 500, { ok: false, error: 'server_error' });
-      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-      fs.createReadStream(INDEX).pipe(res);
+    if (p.startsWith('/api/')) res.setHeader('X-Robots-Tag', 'noindex');
+    if (req.method === 'GET' && (p === '/' || p === '/index.html') && INDEX) {
+      serveHtml(req, res, INDEX);
     } else if (req.method === 'GET' && PAGES[p.replace(/\/$/, '')]) {
-      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-      fs.createReadStream(PAGES[p.replace(/\/$/, '')]).pipe(res);
+      serveHtml(req, res, PAGES[p.replace(/\/$/, '')]);
+    } else if (req.method === 'GET' && p === '/robots.txt') {
+      res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
+      res.end('User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ' + siteOf(req) + '/sitemap.xml\n');
+    } else if (req.method === 'GET' && p === '/sitemap.xml') {
+      const urls = ['/', '/about', '/contact', '/privacy', '/terms'].map(u => '  <url><loc>' + siteOf(req) + u + '</loc></url>').join('\n');
+      res.writeHead(200, { 'Content-Type': 'application/xml; charset=utf-8' });
+      res.end('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + '\n</urlset>\n');
     } else if (p === '/healthz') send(res, 200, { ok: true });
     else if (p === '/api/resolve' && req.method === 'POST') await resolve(req, res);
     else if (p === '/api/download' && req.method === 'GET') await download(req, res);
