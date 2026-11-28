@@ -15,9 +15,16 @@ const MEDIA_HOSTS = ['sc-cdn.net', 'snapchat.com']
 
 // Works with the page in public/index.html or sitting next to server.js (easier to upload from a phone)
 const INDEX = [path.join(__dirname, 'public', 'index.html'), path.join(__dirname, 'index.html')].find(f => fs.existsSync(f));
+const ROUTES = {
+  '/privacy': 'privacy', '/terms': 'terms', '/about': 'about', '/contact': 'contact',
+  '/save-snapchat-story': 'guide-story',
+  '/download-snapchat-spotlight-video': 'guide-spotlight',
+  '/save-snapchat-videos-iphone-android': 'guide-phone'
+};
 const PAGES = {};
-['privacy', 'terms', 'about', 'contact'].forEach(n => {
-  PAGES['/' + n] = [path.join(__dirname, 'public', n + '.html'), path.join(__dirname, n + '.html')].find(f => fs.existsSync(f));
+Object.keys(ROUTES).forEach(r => {
+  const n = ROUTES[r];
+  PAGES[r] = [path.join(__dirname, 'public', n + '.html'), path.join(__dirname, n + '.html')].find(f => fs.existsSync(f));
 });
 
 const hostOk = (h, list) => { h = String(h).toLowerCase(); return list.some(d => h === d || h.endsWith('.' + d)); };
@@ -154,7 +161,12 @@ function readBody(req, max) {
   });
 }
 // Public address of the site. Set SITE_URL (e.g. https://yourdomain.com) once you have a domain.
-const SITE_ENV = (process.env.SITE_URL || '').replace(/\/+$/, '');
+const SITE_ENV = (() => {
+  let v = (process.env.SITE_URL || '').trim().replace(/\/+$/, '');
+  if (v && !/^https?:\/\//i.test(v)) v = 'https://' + v;
+  try { return v ? new URL(v).origin : ''; } catch (e) { return ''; }
+})();
+const CANON_HOST = SITE_ENV ? new URL(SITE_ENV).hostname.toLowerCase() : '';
 const siteOf = req => {
   if (SITE_ENV) return SITE_ENV;
   const h = String(req.headers['x-forwarded-host'] || req.headers.host || '');
@@ -228,6 +240,14 @@ const server = http.createServer(async (req, res) => {
   res.setHeader('Referrer-Policy', 'no-referrer');
   const p = new URL(req.url, 'http://x').pathname;
   try {
+    // Once SITE_URL is set, any other address (the onrender.com one, www) redirects to the main domain
+    if (CANON_HOST && (req.method === 'GET' || req.method === 'HEAD') && !p.startsWith('/api/') && p !== '/healthz') {
+      const host = String(req.headers['x-forwarded-host'] || req.headers.host || '').split(',')[0].trim().toLowerCase().replace(/:\d+$/, '');
+      if (host && host !== CANON_HOST) {
+        res.writeHead(301, { Location: SITE_ENV + req.url, 'Cache-Control': 'public, max-age=3600' });
+        return res.end();
+      }
+    }
     if (p.startsWith('/api/')) res.setHeader('X-Robots-Tag', 'noindex');
     if (req.method === 'GET' && (p === '/' || p === '/index.html') && INDEX) {
       serveHtml(req, res, INDEX);
@@ -237,7 +257,7 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
       res.end('User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ' + siteOf(req) + '/sitemap.xml\n');
     } else if (req.method === 'GET' && p === '/sitemap.xml') {
-      const urls = ['/', '/about', '/contact', '/privacy', '/terms'].map(u => '  <url><loc>' + siteOf(req) + u + '</loc></url>').join('\n');
+      const urls = ['/'].concat(Object.keys(ROUTES)).map(u => '  <url><loc>' + siteOf(req) + u + '</loc></url>').join('\n');
       res.writeHead(200, { 'Content-Type': 'application/xml; charset=utf-8' });
       res.end('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + '\n</urlset>\n');
     } else if (p === '/healthz') send(res, 200, { ok: true });
